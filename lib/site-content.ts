@@ -93,6 +93,35 @@ export type AcademicsSection = {
   cards: AcademicsCard[];
 };
 
+export type ManagementTeamMember = {
+  id: string;
+  title: string;
+  name: string;
+  qualification: string;
+  experience: string;
+  imageUrl?: string;
+};
+
+export type ManagementSection = {
+  title: string;
+  subtitle: string;
+  intro: string[];
+  imageUrl: string;
+  team: ManagementTeamMember[];
+  committeeTitle: string;
+  committeeItems: string[];
+};
+
+export type CampusItem = {
+  id: string;
+  label: string;
+  value: string;
+};
+
+export type InfrastructureSection = {
+  campus: CampusItem[];
+};
+
 export type SiteContent = {
   heroSlides: HeroSlide[];
   welcome: {
@@ -116,6 +145,8 @@ export type SiteContent = {
   navigation: NavItem[];
   scoreboard: ScoreboardData;
   academicsSection: AcademicsSection;
+  managementSection: ManagementSection;
+  infrastructure: InfrastructureSection;
 };
 
 export const defaultNavigation: NavItem[] = [
@@ -384,4 +415,67 @@ export const defaultSiteContent: SiteContent = {
   navigation: defaultNavigation,
   scoreboard: defaultScoreboard,
   academicsSection: defaultAcademicsSection,
+  managementSection: {
+    title: 'School Management',
+    subtitle: 'Leadership, committee, and administration',
+    intro: [
+      'Army Public School Khadakwasla is managed by a dedicated leadership team committed to academic excellence and student welfare.',
+      'The school management committee ensures strong governance, disciplined administration, and a nurturing environment for every child.',
+    ],
+    imageUrl:
+      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=900&h=500&fit=crop',
+    team: [
+      {
+        id: 'm1',
+        title: 'Principal',
+        name: 'Mrs. Yasmia Kaur',
+        qualification: 'B.Ed, M.Ed',
+        experience: '15+ years',
+        imageUrl: '',
+      },
+      {
+        id: 'm2',
+        title: 'Vice Principal (Academics)',
+        name: 'Dr. R.K. Sharma',
+        qualification: 'M.Sc, Ph.D, B.Ed',
+        experience: '12+ years',
+        imageUrl: '',
+      },
+      {
+        id: 'm3',
+        title: 'Vice Principal (Administration)',
+        name: 'Col. Arun Kumar (Retd.)',
+        qualification: 'B.A, M.A, B.Ed',
+        experience: '20+ years',
+        imageUrl: '',
+      },
+      {
+        id: 'm4',
+        title: 'Head - Primary Section',
+        name: 'Ms. Priya Singh',
+        qualification: 'B.Ed, D.Ed',
+        experience: '10+ years',
+        imageUrl: '',
+      },
+    ],
+    committeeTitle: 'Composition of School Management Committee',
+    committeeItems: [
+      'Chairman',
+      'One Senior A/Q Staff Offr',
+      'One Commanding Officer Major/Minor Unit',
+      'Two Parent Rep',
+      'Two Teacher Rep',
+      'Two Educationists',
+      'Staff Officer to Chairman',
+      'Secretary (Principal)',
+    ],
+  },
+  infrastructure: {
+    campus: [
+      { id: 'classrooms', label: 'Class rooms', value: '34' },
+      { id: 'computer-labs', label: 'Computer labs', value: '2' },
+      { id: 'science-lab', label: 'Science lab', value: '1' },
+      { id: 'library', label: 'Library', value: '1' },
+    ],
+  },
 };

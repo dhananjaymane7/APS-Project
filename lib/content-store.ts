@@ -38,6 +38,25 @@ function mergeSiteContent(def: SiteContent, patch: Partial<SiteContent>): SiteCo
             : def.academicsSection.cards,
         }
       : def.academicsSection,
+    managementSection: patch.managementSection
+      ? {
+          ...def.managementSection,
+          ...patch.managementSection,
+          team: patch.managementSection.team?.length
+            ? patch.managementSection.team
+            : def.managementSection.team,
+          committeeItems: patch.managementSection.committeeItems?.length
+            ? patch.managementSection.committeeItems
+            : def.managementSection.committeeItems,
+        }
+      : def.managementSection,
+    infrastructure: patch.infrastructure
+      ? {
+          ...def.infrastructure,
+          ...patch.infrastructure,
+          campus: patch.infrastructure.campus?.length ? patch.infrastructure.campus : def.infrastructure.campus,
+        }
+      : def.infrastructure,
     scoreboard: mergeScoreboard(def.scoreboard, patch.scoreboard),
   };
 }

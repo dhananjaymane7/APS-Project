@@ -1,55 +1,70 @@
 import PageLayout from '@/components/PageLayout';
+import { readSiteContent } from '@/lib/content-store';
+import type { ManagementSection } from '@/lib/site-content';
 
 export const metadata = {
   title: 'Management - Army Public School',
 };
 
-export default function ManagementPage() {
+export default async function ManagementPage() {
+  const content = await readSiteContent();
+  const section: ManagementSection = content.managementSection;
+
   return (
     <PageLayout
-      title="School Management"
-      subtitle="Leadership and Administration"
+      title={section.title}
+      subtitle={section.subtitle}
       breadcrumbs={[
         { label: 'Home', href: '/' },
         { label: 'About Us', href: '/about' },
         { label: 'Management' },
       ]}
     >
+      <section className="mb-12 grid gap-8 lg:grid-cols-[1.4fr_0.6fr] items-start">
+        <div className="space-y-6">
+          {section.intro.map((paragraph, idx) => (
+            <p key={idx} className="text-muted-foreground leading-relaxed">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+        {section.imageUrl ? (
+          <div className="overflow-hidden rounded-3xl border border-border shadow-lg">
+            <img
+              src={section.imageUrl}
+              alt="School management"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        ) : null}
+      </section>
+
       <section className="mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[
-            {
-              title: 'Principal',
-              name: 'Mrs. Yasmia Kaur',
-              qualification: 'B.Ed, M.Ed',
-              experience: '15+ years',
-            },
-            {
-              title: 'Vice Principal (Academics)',
-              name: 'Dr. R.K. Sharma',
-              qualification: 'M.Sc, Ph.D, B.Ed',
-              experience: '12+ years',
-            },
-            {
-              title: 'Vice Principal (Administration)',
-              name: 'Col. Arun Kumar (Retd.)',
-              qualification: 'B.A, M.A, B.Ed',
-              experience: '20+ years',
-            },
-            {
-              title: 'Head - Primary Section',
-              name: 'Ms. Priya Singh',
-              qualification: 'B.Ed, D.Ed',
-              experience: '10+ years',
-            },
-          ].map((member, index) => (
+        <h2 className="text-3xl font-bold text-primary mb-6">Management Team</h2>
+        <div className="grid gap-6 md:grid-cols-2">
+          {section.team.map((member) => (
             <div
-              key={index}
+              key={member.id}
               className="bg-white rounded-lg shadow-md p-8 border-l-4 border-primary hover:shadow-lg transition"
             >
-              <h3 className="text-lg font-bold text-primary mb-2">{member.title}</h3>
-              <p className="text-xl font-semibold text-primary mb-4">{member.name}</p>
-              <div className="space-y-2 text-muted-foreground text-sm">
+              <div className="flex items-center gap-4 mb-4">
+                {member.imageUrl ? (
+                  <img
+                    src={member.imageUrl}
+                    alt={member.name}
+                    className="h-16 w-16 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#0a305f] text-white">
+                    {member.name.charAt(0)}
+                  </div>
+                )}
+                <div>
+                  <h3 className="text-xl font-bold text-primary">{member.title}</h3>
+                  <p className="font-semibold text-muted-foreground">{member.name}</p>
+                </div>
+              </div>
+              <div className="space-y-2 text-sm text-muted-foreground">
                 <p>
                   <strong>Qualification:</strong> {member.qualification}
                 </p>
@@ -63,21 +78,12 @@ export default function ManagementPage() {
       </section>
 
       <section>
-        <h2 className="text-3xl font-bold text-primary mb-6">Administrative Structure</h2>
+        <h2 className="text-3xl font-bold text-primary mb-6">{section.committeeTitle}</h2>
         <div className="bg-white rounded-lg shadow-md p-8 border border-border">
-          <div className="space-y-6">
-            {[
-              'Academic Division - Curriculum, Teaching Methods, Assessment',
-              'Administrative Division - Finance, Human Resources, Operations',
-              'Student Welfare Division - Discipline, Health, Counseling',
-              'Infrastructure Division - Maintenance, Security, Development',
-              'Community Engagement Division - Parent Relations, Events',
-            ].map((item, i) => (
-              <div key={i} className="flex gap-4 items-start">
-                <div className="w-8 h-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold flex-shrink-0">
-                  {i + 1}
-                </div>
-                <span className="text-muted-foreground pt-1">{item}</span>
+          <div className="grid gap-3 lg:grid-cols-2">
+            {section.committeeItems.map((item, idx) => (
+              <div key={idx} className="rounded-xl border border-border bg-surface p-4 text-muted-foreground">
+                {item}
               </div>
             ))}
           </div>

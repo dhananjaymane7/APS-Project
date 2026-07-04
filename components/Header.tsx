@@ -152,7 +152,7 @@ export default function Header({ navItems = defaultNavigation }: { navItems?: Na
           </div>
           <div className="flex w-full flex-wrap items-center justify-end gap-2 md:w-auto">
             <a
-              href="#"
+              href="https://erp.awesindia.edu.in/webInterface/PayFees/"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#f4c430] via-[#fcd34d] to-[#f4c430] px-4 py-2 text-xs font-bold uppercase tracking-wide text-[#0a305f] shadow-lg ring-2 ring-white/20 transition hover:brightness-105"
             >
               <CreditCard className="h-4 w-4" />

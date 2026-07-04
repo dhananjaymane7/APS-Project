@@ -14,6 +14,8 @@ import { Switch } from '@/components/ui/switch';
 import NavigationEditor from '@/components/admin/NavigationEditor';
 import ScoreboardEditor from '@/components/admin/ScoreboardEditor';
 import AcademicsSectionEditor from '@/components/admin/AcademicsSectionEditor';
+import ManagementSectionEditor from '@/components/admin/ManagementSectionEditor';
+import CampusEditor from '@/components/admin/CampusEditor';
 
 function newId() {
   return typeof crypto !== 'undefined' && crypto.randomUUID
@@ -110,6 +112,8 @@ export default function AdminDashboard() {
           <TabsTrigger value="nav">Navigation</TabsTrigger>
           <TabsTrigger value="scoreboard">Score board</TabsTrigger>
           <TabsTrigger value="academics">Academics</TabsTrigger>
+          <TabsTrigger value="management">Management</TabsTrigger>
+          <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>
         </TabsList>
 
         <TabsContent value="hero" className="mt-4">
@@ -740,6 +744,25 @@ export default function AdminDashboard() {
             saving={saving}
             onSave={() => void save(content)}
             uploadFile={uploadFile}
+          />
+        </TabsContent>
+
+        <TabsContent value="management" className="mt-4">
+          <ManagementSectionEditor
+            content={content}
+            setContent={setContent}
+            saving={saving}
+            onSave={() => void save(content)}
+            uploadFile={uploadFile}
+          />
+        </TabsContent>
+
+        <TabsContent value="infrastructure" className="mt-4">
+          <CampusEditor
+            content={content}
+            setContent={setContent}
+            saving={saving}
+            onSave={() => void save(content)}
           />
         </TabsContent>
       </Tabs>

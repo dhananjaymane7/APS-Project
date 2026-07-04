@@ -1,60 +1,46 @@
-import PageLayout from '@/components/PageLayout';
+import PageLayout from "@/components/PageLayout";
 
 export const metadata = {
-  title: 'School History - Army Public School',
-  description: 'Learn about the rich history and heritage of Army Public School Khadakwasla.',
+  title: "School History - Army Public School",
+  description:
+    "Learn about the rich history and heritage of Army Public School Khadakwasla.",
 };
 
 export default function HistoryPage() {
   return (
     <PageLayout
       title="Our History"
-      subtitle="A Journey of Excellence Since 2012"
       breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'About Us', href: '/about' },
-        { label: 'History' },
+        { label: "Home", href: "/" },
+        { label: "About Us", href: "/about" },
+        { label: "History" },
       ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="prose prose-lg max-w-none text-muted-foreground">
-          <h2 className="text-3xl font-bold text-primary mb-6">Founding and Growth</h2>
+          
           <p className="mb-6 text-justify">
-            Army Public School Khadakwasla was established on 1st April 2012, as part of the prestigious network of
-            schools managed by the Army Welfare Education Society (AWES). The school is located in the serene premises
-            of the National Defence Academy (NDA), one of the premier institutions of national importance.
+            NDA English School was established on 1st February 1955. In 1975, it
+            was taken over by the National Defence Academy (NDA) from the Pune
+            Jesuits Society. The following year, in 1976, the school was
+            registered under the Society Registration Act and later under the
+            Zilla Parishad in 1980. A major milestone came in 2012 when the
+            school was upgraded to Army Public School (APS) Khadakwasla, with
+            Class VI as the highest class at the time.
           </p>
-
-          <h2 className="text-3xl font-bold text-primary mb-6 mt-8">Our Heritage</h2>
           <p className="mb-6 text-justify">
-            Being located within the precincts of NDA, our school embodies the values of discipline, dedication, and
-            service that are the hallmarks of the Armed Forces. Our students are nurtured in an environment that
-            emphasizes academic excellence alongside character development.
+            The school continued to grow steadily, receiving affiliation from
+            the Central Board of Secondary Education (CBSE) on 10th February
+            2014. In 2016, it was further upgraded to include Class X, effective
+            from 1st April. Another significant achievement came on 11th August
+            2021, when APS Khadakwasla was upgraded to a Senior Secondary
+            School, offering education up to Class XII
           </p>
-
-          <h2 className="text-3xl font-bold text-primary mb-6 mt-8">Milestones</h2>
-          <ul className="list-none space-y-4 mb-6">
-            <li className="flex gap-4">
-              <span className="text-accent font-bold text-xl">2012</span>
-              <span>School inauguration with primary section</span>
-            </li>
-            <li className="flex gap-4">
-              <span className="text-accent font-bold text-xl">2014</span>
-              <span>Secondary section established</span>
-            </li>
-            <li className="flex gap-4">
-              <span className="text-accent font-bold text-xl">2016</span>
-              <span>Senior secondary section launched</span>
-            </li>
-            <li className="flex gap-4">
-              <span className="text-accent font-bold text-xl">2018</span>
-              <span>Modern infrastructure and labs inaugurated</span>
-            </li>
-            <li className="flex gap-4">
-              <span className="text-accent font-bold text-xl">2020</span>
-              <span>Digital learning platform implemented</span>
-            </li>
-          </ul>
+          At present, the school comprises 38 well-equipped classrooms and
+          provides quality education from Classes I to XII. With a student
+          strength of over 1,700, APS Khadakwasla continues to uphold its legacy
+          of academic excellence and holistic development in a disciplined and
+          nurturing environment.
         </div>
       </div>
     </PageLayout>

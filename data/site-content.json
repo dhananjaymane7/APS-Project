@@ -31,8 +31,8 @@
     "title": "Principal's Message",
     "subtitle": "A warm welcome from our leadership",
     "name": "Principal",
-    "message": "Greetings, dear students, parents, and educators.\n\nAt APS Khadakwasla, we believe in the power of education to transform lives and shape a brighter future. As we embark on this academic journey together, I am thrilled to share our commitment to providing an inspiring and holistic learning environment for all.\n\nWith the recent implementation of the National Education Policy (NEP), we are embracing innovative pedagogical approaches that cater to individual learning styles, foster critical thinking, and nurture a lifelong love for learning.\n\nAs the principal, my vision is to empower our students to become confident, compassionate, and responsible global citizens.",
-    "imageUrl": "/uploads/1783178724733-logo.png",
+    "message": "Greetings, dear students, parents, and educators,\n\nAt APS Khadakwasla, we believe in the power of education to transform lives and shape a brighter future. As we embark on this academic journey together, I am thrilled to share our commitment to providing an inspiring and holistic learning environment for all.\n\nWith the recent implementation of the National Education Policy (NEP), we are embracing innovative pedagogical approaches that cater to individual learning styles, foster critical thinking, and nurture a lifelong love for learning. Our dedicated team of educators are steadfast in their pursuit of excellence, adapting teaching methodologies to align with the evolving needs of our students and the dynamic world around us.\n\nAs the principal, my vision is to empower our students to become confident, compassionate, and responsible global citizens. We encourage curiosity, creativity, and collaboration, instilling in our students the values that will guide them not only academically but also in every facet of life.\n\nOur school website serves as a digital window into the incredible journey of growth and learning that takes place on our campus. Here, you will find a repository of information, achievements, and updates that showcase the vibrancy of our school community.\n\nI invite all stakeholders to actively engage with our school's digital presence, as we believe that education is a collaborative effort between students, parents, and educators. Let us work together to create an enriching environment where every student can thrive and realize their full potential.\n\nThank you for entrusting us with the privilege of nurturing the leaders of tomorrow. Together, let's embark on a transformative educational voyage that celebrates knowledge, embraces change, and empowers each individual to shine.\n\nWarm regards,\nDr. Yasmin Kaur\nPrincipal, APS Khadakwasla",
+    "imageUrl": "/uploads/1783181067825-principal.jpeg",
     "ctaText": "Read More",
     "ctaLink": "/about/principal"
   },
@@ -151,8 +151,8 @@
               "href": "/about/rules"
             },
             {
-              "label": "Code of conduct",
-              "href": "/about/rules#conduct"
+              "label": "Discipline",
+              "href": "/about/discipline"
             }
           ]
         }
@@ -438,7 +438,91 @@
         "title": "Academic Calendar",
         "description": "Important dates, holidays, and academic schedules.",
         "href": "/academics/calendar",
-        "iconKey": "calendarDays"
+        "iconKey": "calendarDays",
+        "imageUrl": "/uploads/1783179992835-Result.pdf"
+      }
+    ]
+  },
+  "managementSection": {
+    "title": "School Management",
+    "subtitle": "Leadership, committee, and administration",
+    "intro": [
+      "Army Public School Khadakwasla is a part of a wide network of schools managed by the Army Welfare Education Society, running 133 schools across the country. The vision of AWES is to provide quality education at an affordable cost.",
+      "The endeavor of AWES is to make its school a 'Center of Excellence’ and to provide the very best to the wards of army personnel. It is this commitment that makes ‘AWES’ march ahead to be second to none and in keeping with the standards and tradition of the Army."
+    ],
+    "imageUrl": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=900&h=500&fit=crop",
+    "team": [
+      {
+        "id": "m1",
+        "title": "Principal",
+        "name": "Mrs. Yasmia Kaur",
+        "qualification": "B.Ed, M.Ed",
+        "experience": "15+ years",
+        "imageUrl": ""
+      },
+      {
+        "id": "m2",
+        "title": "Vice Principal (Academics)",
+        "name": "Dr. R.K. Sharma",
+        "qualification": "M.Sc, Ph.D, B.Ed",
+        "experience": "12+ years",
+        "imageUrl": ""
+      },
+      {
+        "id": "m3",
+        "title": "Vice Principal (Administration)",
+        "name": "Col. Arun Kumar (Retd.)",
+        "qualification": "B.A, M.A, B.Ed",
+        "experience": "20+ years",
+        "imageUrl": ""
+      },
+      {
+        "id": "m4",
+        "title": "Head - Primary Section",
+        "name": "Ms. Priya Singh",
+        "qualification": "B.Ed, D.Ed",
+        "experience": "10+ years",
+        "imageUrl": ""
+      }
+    ],
+    "committeeTitle": "Composition of School Management Committee",
+    "committeeItems": [
+      "Chairman",
+      "One Senior A/Q Staff Offr",
+      "One Commanding Officer Major/Minor Unit",
+      "Two Parent Rep",
+      "Two Teacher Rep",
+      "Two Educationists",
+      "Staff Officer to Chairman",
+      "Secretary (Principal)"
+    ]
+  },
+  "infrastructure": {
+    "campus": [
+      {
+        "id": "classrooms",
+        "label": "Class rooms",
+        "value": "34"
+      },
+      {
+        "id": "computer-labs",
+        "label": "Computer labs",
+        "value": "2"
+      },
+      {
+        "id": "science-lab",
+        "label": "Science lab",
+        "value": "1"
+      },
+      {
+        "id": "library",
+        "label": "Library",
+        "value": "1"
+      },
+      {
+        "id": "90137016-dc25-4581-95ae-ea3b7633d1e6",
+        "label": "Examination cell",
+        "value": "1"
       }
     ]
   }
