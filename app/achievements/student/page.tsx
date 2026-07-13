@@ -1,10 +1,14 @@
 import PageLayout from '@/components/PageLayout';
+import { readSiteContent } from '@/lib/content-store';
 
 export const metadata = {
   title: 'Student Achievements - Army Public School',
 };
 
-export default function StudentAchievementsPage() {
+export default async function StudentAchievementsPage() {
+  const content = await readSiteContent();
+  const student = content.achievements.student;
+
   return (
     <PageLayout
       title="Student Achievements"
@@ -16,15 +20,11 @@ export default function StudentAchievementsPage() {
       ]}
     >
       <section className="mb-12">
+        <p className="text-muted-foreground mb-8 leading-relaxed">{student.intro}</p>
         <h2 className="text-3xl font-bold text-primary mb-6">Sports Achievements</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {[
-            { sport: 'Cricket', medals: 'Gold', level: 'State Level' },
-            { sport: 'Badminton', medals: '2 Gold, 1 Silver', level: 'National' },
-            { sport: 'Basketball', medals: 'Silver', level: 'State Level' },
-            { sport: 'Athletics', medals: '5 Gold Medals', level: 'District' },
-          ].map((achievement, i) => (
-            <div key={i} className="bg-white rounded-lg shadow-md p-6 border-l-4 border-accent">
+          {student.sports.map((achievement) => (
+            <div key={achievement.id} className="bg-white rounded-lg shadow-md p-6 border-l-4 border-accent">
               <p className="text-lg font-bold text-primary mb-2">{achievement.sport}</p>
               <p className="text-muted-foreground mb-2">
                 <strong>Medals:</strong> {achievement.medals}
@@ -37,17 +37,10 @@ export default function StudentAchievementsPage() {
         </div>
 
         <h2 className="text-3xl font-bold text-primary mb-6">Co-Curricular Excellence</h2>
-        <div className="space-y-4">
-          {[
-            { category: 'Debate', achievement: '1st Prize, National Inter-School Debate' },
-            { category: 'Drama', achievement: 'Best Performance Award, State Cultural Fest' },
-            { category: 'Music', achievement: 'Gold Medal, National Music Competition' },
-            { category: 'Art & Design', achievement: '2nd Prize, All India Art Exhibition' },
-            { category: 'Science Project', achievement: '1st Prize, Regional Science Fair' },
-            { category: 'Essay Writing', achievement: '3rd Prize, National Essay Competition' },
-          ].map((achievement, i) => (
+        <div className="space-y-4 mb-12">
+          {student.coCurricular.map((achievement) => (
             <div
-              key={i}
+              key={achievement.id}
               className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-6 border border-border flex items-start gap-4"
             >
               <span className="text-2xl">🏆</span>
@@ -63,23 +56,23 @@ export default function StudentAchievementsPage() {
       <section>
         <h2 className="text-3xl font-bold text-primary mb-6">Notable Alumni</h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
-          Our alumni have gone on to pursue excellence in various fields including academics, sports, military
-          service, and professional careers. We take immense pride in their achievements.
+          Our alumni have gone on to pursue excellence in various fields including academics, sports, military service, and professional careers. We take immense pride in their achievements.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { name: 'Raj Kumar Singh', achievement: 'NDA Qualified, Commissioned Officer' },
-            { name: 'Priya Sharma', achievement: 'NEET Qualified, Medical Student' },
-            { name: 'Arun Patel', achievement: 'IIT-JEE Qualified, Engineer' },
-            { name: 'Neha Verma', achievement: 'UPSC Exam Qualifier, IAS Officer' },
-          ].map((alumnus, i) => (
-            <div key={i} className="bg-white rounded-lg shadow-md p-6 border-l-4 border-primary">
+          {student.alumni.map((alumnus) => (
+            <div key={alumnus.id} className="bg-white rounded-lg shadow-md p-6 border-l-4 border-primary">
               <p className="font-bold text-primary text-lg">{alumnus.name}</p>
               <p className="text-muted-foreground mt-2">{alumnus.achievement}</p>
             </div>
           ))}
         </div>
       </section>
+
+      {student.imageUrl && (
+        <div className="mt-12">
+          <img src={student.imageUrl} alt="Student achievements" className="w-full rounded-lg shadow-md object-cover max-h-[420px]" />
+        </div>
+      )}
     </PageLayout>
   );
 }

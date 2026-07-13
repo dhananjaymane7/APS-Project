@@ -118,6 +118,69 @@ export type CampusItem = {
   value: string;
 };
 
+export type AchievementItem = {
+  id: string;
+  year: string;
+  title: string;
+  description: string;
+  category: string;
+};
+
+export type AchievementStat = {
+  id: string;
+  number: string;
+  label: string;
+};
+
+export type AcademicResult = {
+  id: string;
+  exam: string;
+  passPercentage: string;
+  toppers: string;
+};
+
+export type AchievementAcademicSection = {
+  imageUrl: string;
+  intro: string;
+  results: AcademicResult[];
+  subjects: string[];
+  scholarshipAwards: string[];
+};
+
+export type AchievementSport = {
+  id: string;
+  sport: string;
+  medals: string;
+  level: string;
+};
+
+export type AchievementCoCurricular = {
+  id: string;
+  category: string;
+  achievement: string;
+};
+
+export type AchievementAlumnus = {
+  id: string;
+  name: string;
+  achievement: string;
+};
+
+export type AchievementStudentSection = {
+  imageUrl: string;
+  intro: string;
+  sports: AchievementSport[];
+  coCurricular: AchievementCoCurricular[];
+  alumni: AchievementAlumnus[];
+};
+
+export type AchievementsSection = {
+  awards: AchievementItem[];
+  stats: AchievementStat[];
+  academic: AchievementAcademicSection;
+  student: AchievementStudentSection;
+};
+
 export type InfrastructureSection = {
   campus: CampusItem[];
 };
@@ -146,6 +209,7 @@ export type SiteContent = {
   scoreboard: ScoreboardData;
   academicsSection: AcademicsSection;
   managementSection: ManagementSection;
+  achievements: AchievementsSection;
   infrastructure: InfrastructureSection;
 };
 
@@ -469,6 +533,76 @@ export const defaultSiteContent: SiteContent = {
       'Staff Officer to Chairman',
       'Secretary (Principal)',
     ],
+  },
+  achievements: {
+    awards: [
+      {
+        id: 'a1',
+        year: '2024',
+        title: 'National Science Olympiad',
+        description: 'Students achieved 1st position in the National Science Olympiad competition.',
+        category: 'Academic',
+      },
+      {
+        id: 'a2',
+        year: '2024',
+        title: 'Inter-School Sports Championship',
+        description: 'Won overall championship in district-level inter-school sports competition.',
+        category: 'Sports',
+      },
+      {
+        id: 'a3',
+        year: '2023',
+        title: 'Math Genius Award',
+        description: 'Three students selected for state-level mathematics competition.',
+        category: 'Academic',
+      },
+    ],
+    stats: [
+      { id: 's1', number: '98%', label: 'Pass Rate' },
+      { id: 's2', number: '45+', label: 'Scholarships' },
+      { id: 's3', number: '120+', label: 'Awards Won' },
+      { id: 's4', number: '85%', label: 'Merit Students' },
+    ],
+    academic: {
+      imageUrl: '',
+      intro: 'Our students have earned numerous scholarships and merit-based awards from various national and state-level organizations. This is a testament to their dedication and academic excellence.',
+      results: [
+        { id: 'r1', exam: 'Class X (2024)', passPercentage: '98%', toppers: '3' },
+        { id: 'r2', exam: 'Class XII (2024)', passPercentage: '97%', toppers: '2' },
+        { id: 'r3', exam: 'Class X (2023)', passPercentage: '96%', toppers: '4' },
+      ],
+      subjects: ['Mathematics', 'Science', 'English', 'Social Studies', 'Hindi', 'Physics', 'Chemistry', 'Biology'],
+      scholarshipAwards: [
+        'National Scholarship Scheme - 5 students',
+        'State Merit Scholarship - 12 students',
+        'Excellence in Science - 8 awardees',
+        'Mathematics Excellence - 6 awardees',
+        'Language Skills Recognition - 10 awardees',
+      ],
+    },
+    student: {
+      imageUrl: '',
+      intro: 'Our students continue to shine across sports, co-curricular activities, and leadership roles. These achievements reflect their dedication and hard work.',
+      sports: [
+        { id: 'sp1', sport: 'Cricket', medals: 'Gold', level: 'State Level' },
+        { id: 'sp2', sport: 'Badminton', medals: '2 Gold, 1 Silver', level: 'National' },
+        { id: 'sp3', sport: 'Basketball', medals: 'Silver', level: 'State Level' },
+        { id: 'sp4', sport: 'Athletics', medals: '5 Gold Medals', level: 'District' },
+      ],
+      coCurricular: [
+        { id: 'cc1', category: 'Debate', achievement: '1st Prize, National Inter-School Debate' },
+        { id: 'cc2', category: 'Drama', achievement: 'Best Performance Award, State Cultural Fest' },
+        { id: 'cc3', category: 'Music', achievement: 'Gold Medal, National Music Competition' },
+        { id: 'cc4', category: 'Art & Design', achievement: '2nd Prize, All India Art Exhibition' },
+      ],
+      alumni: [
+        { id: 'al1', name: 'Raj Kumar Singh', achievement: 'NDA Qualified, Commissioned Officer' },
+        { id: 'al2', name: 'Priya Sharma', achievement: 'NEET Qualified, Medical Student' },
+        { id: 'al3', name: 'Arun Patel', achievement: 'IIT-JEE Qualified, Engineer' },
+        { id: 'al4', name: 'Neha Verma', achievement: 'UPSC Exam Qualifier, IAS Officer' },
+      ],
+    },
   },
   infrastructure: {
     campus: [

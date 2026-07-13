@@ -91,9 +91,9 @@ export default async function Home() {
     },
   ];
 
-  const publicDocs = content.documents.filter(
-    (d) => d.fileUrl && d.fileUrl !== '#' && d.title,
-  );
+  const publicDocs = content.documents
+    .filter((d) => d.fileUrl && d.fileUrl !== '#' && d.title)
+    .slice(-7);
 
   return (
     <div className="min-h-screen bg-background">
@@ -117,7 +117,26 @@ export default async function Home() {
                 ))}
               </div>
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 space-y-6">
+              {publicDocs.length > 0 && (
+                <div className="rounded-lg border border-border bg-white p-6 shadow-sm">
+                  <h3 className="text-xl font-bold mb-4">Notices & downloads</h3>
+                  <ul className="space-y-2">
+                    {publicDocs.map((doc) => (
+                      <li key={doc.id}>
+                        <a
+                          href={doc.fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-medium text-[#0a305f] hover:text-[#da251c] transition"
+                        >
+                          {doc.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <ImportantLinksCard links={content.importantLinks} />
             </div>
           </div>
@@ -146,29 +165,6 @@ export default async function Home() {
           />
         </div>
       </section>
-
-      {publicDocs.length > 0 && (
-        <section className="py-12 px-4 bg-muted/50 border-y border-border">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-2xl font-bold text-[#0a305f] mb-6 text-center">Notices & downloads</h2>
-            <ul className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
-              {publicDocs.map((doc) => (
-                <li key={doc.id}>
-                  <a
-                    href={doc.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg border border-[#0a305f]/20 bg-white px-4 py-3 text-sm font-medium text-[#0a305f] shadow-sm hover:bg-[#e9f0f7] transition"
-                  >
-                    <FileText className="h-4 w-4 text-[#da251c]" />
-                    {doc.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
 
       <AcademicsHomeSection section={content.academicsSection} />
 

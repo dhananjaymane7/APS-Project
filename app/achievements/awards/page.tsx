@@ -1,51 +1,15 @@
 import PageLayout from '@/components/PageLayout';
+import { readSiteContent } from '@/lib/content-store';
 
 export const metadata = {
   title: 'Awards & Achievements - Army Public School',
   description: 'Celebrate the achievements and awards of our students and school.',
 };
 
-export default function AwardsPage() {
-  const achievements = [
-    {
-      year: 2024,
-      title: 'National Science Olympiad',
-      description: 'Students achieved 1st position in National Science Olympiad competition.',
-      category: 'Academic',
-    },
-    {
-      year: 2024,
-      title: 'Inter-School Sports Championship',
-      description: 'Won overall championship in district-level inter-school sports competition.',
-      category: 'Sports',
-    },
-    {
-      year: 2023,
-      title: 'Math Genius Award',
-      description: 'Three students selected for state-level mathematics competition.',
-      category: 'Academic',
-    },
-    {
-      year: 2023,
-      title: 'Cultural Excellence',
-      description: 'Won first prize in annual inter-school cultural festival.',
-      category: 'Co-Curricular',
-    },
-    {
-      year: 2022,
-      title: 'Green School Certificate',
-      description: 'Awarded Green School Certificate for environmental initiatives.',
-      category: 'Environmental',
-    },
-    {
-      year: 2022,
-      title: 'Debate Championship',
-      description: 'Students emerged winners in national debate competition.',
-      category: 'Academic',
-    },
-  ];
-
-  const categories = ['All', 'Academic', 'Sports', 'Co-Curricular', 'Environmental'];
+export default async function AwardsPage() {
+  const content = await readSiteContent();
+  const achievements = content.achievements.awards;
+  const categories = ['All', ...Array.from(new Set(achievements.map((item) => item.category)))];
 
   return (
     <PageLayout
@@ -67,26 +31,21 @@ export default function AwardsPage() {
           </p>
         </div>
 
-        {/* Filter Buttons */}
         <div className="flex flex-wrap gap-3 mb-8">
           {categories.map((category) => (
             <button
               key={category}
-              className={`px-6 py-2 rounded-lg font-semibold transition ${
-                category === 'All'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground'
-              }`}
+              className="px-6 py-2 rounded-lg font-semibold transition bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground"
+              type="button"
             >
               {category}
             </button>
           ))}
         </div>
 
-        {/* Timeline */}
         <div className="space-y-6">
           {achievements.map((achievement, index) => (
-            <div key={index} className="flex gap-6">
+            <div key={achievement.id} className="flex gap-6">
               <div className="flex flex-col items-center">
                 <div className="w-12 h-12 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold flex-shrink-0">
                   🏆
@@ -108,18 +67,12 @@ export default function AwardsPage() {
         </div>
       </section>
 
-      {/* Statistics */}
       <section className="mt-16">
         <h2 className="text-3xl font-bold text-primary mb-8">By The Numbers</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            { number: '98%', label: 'Pass Rate' },
-            { number: '45+', label: 'Scholarships' },
-            { number: '120+', label: 'Awards Won' },
-            { number: '85%', label: 'Merit Students' },
-          ].map((stat, index) => (
+          {content.achievements.stats.map((stat) => (
             <div
-              key={index}
+              key={stat.id}
               className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg p-6 text-center border border-border"
             >
               <p className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.number}</p>

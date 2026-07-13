@@ -155,11 +155,11 @@ export function MessageSection({
     <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-border/60">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
         {photo && (
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center w-full min-h-[280px] overflow-hidden rounded-lg bg-slate-50">
             <img
               src={photo}
               alt={name}
-              className="w-full max-h-[420px] h-auto object-cover rounded-lg shadow-md"
+              className="max-w-full max-h-[520px] object-contain rounded-lg shadow-md"
             />
           </div>
         )}

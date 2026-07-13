@@ -15,6 +15,7 @@ import NavigationEditor from '@/components/admin/NavigationEditor';
 import ScoreboardEditor from '@/components/admin/ScoreboardEditor';
 import AcademicsSectionEditor from '@/components/admin/AcademicsSectionEditor';
 import ManagementSectionEditor from '@/components/admin/ManagementSectionEditor';
+import AchievementsSectionEditor from '@/components/admin/AchievementsSectionEditor';
 import CampusEditor from '@/components/admin/CampusEditor';
 
 function newId() {
@@ -113,6 +114,7 @@ export default function AdminDashboard() {
           <TabsTrigger value="scoreboard">Score board</TabsTrigger>
           <TabsTrigger value="academics">Academics</TabsTrigger>
           <TabsTrigger value="management">Management</TabsTrigger>
+          <TabsTrigger value="achievements">Achievements</TabsTrigger>
           <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>
         </TabsList>
 
@@ -483,7 +485,9 @@ export default function AdminDashboard() {
           <Card>
             <CardHeader>
               <CardTitle>PDFs & documents</CardTitle>
-              <CardDescription>Notices and downloadable files (URLs appear for visitors).</CardDescription>
+              <CardDescription>
+              Notices and downloadable files (URLs appear for visitors). Only the latest 7 PDFs are kept; adding the 8th removes the oldest entry.
+            </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {content.documents.map((doc, idx) => (
@@ -545,6 +549,9 @@ export default function AdminDashboard() {
                     ...content.documents,
                     { id: newId(), title: 'New document', fileUrl: '#', category: 'notice' },
                   ];
+                  if (documents.length > 7) {
+                    documents.shift();
+                  }
                   setContent({ ...content, documents });
                 }}
               >
@@ -749,6 +756,16 @@ export default function AdminDashboard() {
 
         <TabsContent value="management" className="mt-4">
           <ManagementSectionEditor
+            content={content}
+            setContent={setContent}
+            saving={saving}
+            onSave={() => void save(content)}
+            uploadFile={uploadFile}
+          />
+        </TabsContent>
+
+        <TabsContent value="achievements" className="mt-4">
+          <AchievementsSectionEditor
             content={content}
             setContent={setContent}
             saving={saving}

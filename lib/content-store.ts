@@ -50,6 +50,40 @@ function mergeSiteContent(def: SiteContent, patch: Partial<SiteContent>): SiteCo
             : def.managementSection.committeeItems,
         }
       : def.managementSection,
+    achievements: patch.achievements
+      ? {
+          ...def.achievements,
+          ...patch.achievements,
+          awards: patch.achievements.awards?.length ? patch.achievements.awards : def.achievements.awards,
+          stats: patch.achievements.stats?.length ? patch.achievements.stats : def.achievements.stats,
+          academic: {
+            ...def.achievements.academic,
+            ...patch.achievements.academic,
+            results: patch.achievements.academic?.results?.length
+              ? patch.achievements.academic.results
+              : def.achievements.academic.results,
+            subjects: patch.achievements.academic?.subjects?.length
+              ? patch.achievements.academic.subjects
+              : def.achievements.academic.subjects,
+            scholarshipAwards: patch.achievements.academic?.scholarshipAwards?.length
+              ? patch.achievements.academic.scholarshipAwards
+              : def.achievements.academic.scholarshipAwards,
+          },
+          student: {
+            ...def.achievements.student,
+            ...patch.achievements.student,
+            sports: patch.achievements.student?.sports?.length
+              ? patch.achievements.student.sports
+              : def.achievements.student.sports,
+            coCurricular: patch.achievements.student?.coCurricular?.length
+              ? patch.achievements.student.coCurricular
+              : def.achievements.student.coCurricular,
+            alumni: patch.achievements.student?.alumni?.length
+              ? patch.achievements.student.alumni
+              : def.achievements.student.alumni,
+          },
+        }
+      : def.achievements,
     infrastructure: patch.infrastructure
       ? {
           ...def.infrastructure,
@@ -97,5 +131,9 @@ export async function readSiteContent(): Promise<SiteContent> {
 
 export async function writeSiteContent(content: SiteContent): Promise<void> {
   await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
-  await fs.writeFile(DATA_PATH, JSON.stringify(content, null, 2), 'utf8');
+  const persistedContent = {
+    ...content,
+    documents: content.documents.length > 7 ? content.documents.slice(-7) : content.documents,
+  };
+  await fs.writeFile(DATA_PATH, JSON.stringify(persistedContent, null, 2), 'utf8');
 }

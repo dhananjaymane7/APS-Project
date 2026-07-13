@@ -19,7 +19,7 @@ export default function ConditionalSiteHeader() {
       .catch(() => {});
   }, []);
 
-  if (pathname === '/login') return null;
+  if (pathname === '/login' || pathname?.startsWith('/admin')) return null;
 
   return <Header navItems={nav} />;
 }

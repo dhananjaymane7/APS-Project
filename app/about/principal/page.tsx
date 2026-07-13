@@ -35,64 +35,50 @@ export default async function PrincipalPage() {
         { label: "Principal's Message" },
       ]}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-        <div className="lg:col-span-2">
+      <div className="space-y-8 mb-12">
+        {principal ? (
+          <MessageSection
+            name={principal.name}
+            title={principal.title}
+            subtitle={principal.subtitle}
+            message={principal.message}
+            imageUrl={principal.imageUrl}
+            ctaText={principal.ctaText}
+            ctaLink={principal.ctaLink}
+          />
+        ) : (
           <div className="bg-white rounded-lg shadow-lg p-8">
             <h2 className="text-3xl font-bold text-primary mb-6">
               Message from the Principal
             </h2>
-
-            <div className="space-y-6 text-muted-foreground leading-relaxed">
-              {principal?.message ? (
-                principal.message.split('\n\n').map((paragraph, idx) => (
-                  <p key={idx} dangerouslySetInnerHTML={{ __html: paragraph }} />
-                ))
-              ) : (
-                <p>Principal's message is currently unavailable.</p>
-              )}
-            </div>
+            <p>Principal's message is currently unavailable.</p>
           </div>
-        </div>
+        )}
 
-        {/* Sidebar */}
-        <div>
-          <div className="bg-primary text-primary-foreground rounded-lg p-6 shadow-lg sticky top-24">
-            <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-3 text-sm">
-              <li>
-                <a
-                  href="/about/history"
-                  className="hover:text-accent transition"
-                >
-                  → School History
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/about/infrastructure"
-                  className="hover:text-accent transition"
-                >
-                  → Infrastructure
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/about/management"
-                  className="hover:text-accent transition"
-                >
-                  → Management
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/about/affiliation"
-                  className="hover:text-accent transition"
-                >
-                  → Affiliation
-                </a>
-              </li>
-            </ul>
-          </div>
+        <div className="bg-primary text-primary-foreground rounded-lg p-6 shadow-lg">
+          <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+          <ul className="space-y-3 text-sm">
+            <li>
+              <a href="/about/history" className="hover:text-accent transition">
+                → School History
+              </a>
+            </li>
+            <li>
+              <a href="/about/infrastructure" className="hover:text-accent transition">
+                → Infrastructure
+              </a>
+            </li>
+            <li>
+              <a href="/about/management" className="hover:text-accent transition">
+                → Management
+              </a>
+            </li>
+            <li>
+              <a href="/about/affiliation" className="hover:text-accent transition">
+                → Affiliation
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </PageLayout>
