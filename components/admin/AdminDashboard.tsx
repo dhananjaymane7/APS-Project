@@ -28,6 +28,9 @@ export default function AdminDashboard() {
   const [content, setContent] = useState<SiteContent | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
+  const [superActionLoading, setSuperActionLoading] = useState(false);
+  const [removeKey, setRemoveKey] = useState('achievements');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -45,6 +48,16 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     void load();
+    void (async () => {
+      try {
+        const r = await fetch('/api/auth/me', { credentials: 'include' });
+        if (!r.ok) return;
+        const j = await r.json();
+        setRole(j.role ?? null);
+      } catch {
+        // ignore
+      }
+    })();
   }, [load]);
 
   async function save(next: SiteContent) {
@@ -54,6 +67,7 @@ export default function AdminDashboard() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(next),
+        credentials: 'include',
       });
       if (!res.ok) {
         if (res.status === 401) {
@@ -75,13 +89,40 @@ export default function AdminDashboard() {
   async function uploadFile(file: File): Promise<string | null> {
     const fd = new FormData();
     fd.append('file', file);
-    const res = await fetch('/api/upload', { method: 'POST', body: fd });
+    const res = await fetch('/api/upload', { method: 'POST', body: fd, credentials: 'include' });
     if (!res.ok) {
       toast.error('Upload failed');
       return null;
     }
     const data = (await res.json()) as { url: string };
     return data.url;
+  }
+
+  async function doSuperAction(action: string, data?: Record<string, any>) {
+    if (!window.confirm('This is a developer action. Are you sure?')) return;
+    setSuperActionLoading(true);
+    try {
+      const res = await fetch('/api/content/super', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, ...data }),
+        credentials: 'include',
+      });
+      if (!res.ok) {
+        if (res.status === 401) {
+          toast.error('Not authorized');
+          return;
+        }
+        throw new Error('Super action failed');
+      }
+      toast.success('Action completed');
+      // reload site content to reflect destructive changes
+      await load();
+    } catch (e) {
+      toast.error('Could not complete action');
+    } finally {
+      setSuperActionLoading(false);
+    }
   }
 
   if (loading || !content) {
@@ -116,6 +157,7 @@ export default function AdminDashboard() {
           <TabsTrigger value="management">Management</TabsTrigger>
           <TabsTrigger value="achievements">Achievements</TabsTrigger>
           <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>
+          {role === 'superadmin' && <TabsTrigger value="super">Super Admin</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="hero" className="mt-4">
@@ -782,6 +824,53 @@ export default function AdminDashboard() {
             onSave={() => void save(content)}
           />
         </TabsContent>
+        {role === 'superadmin' && (
+          <TabsContent value="super" className="mt-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Super Admin / Developer actions</CardTitle>
+                <CardDescription>Developer-only destructive actions. Use with caution.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <p className="text-sm">Clear homepage blocks (removes all extra blocks)</p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="destructive"
+                      onClick={() => void doSuperAction('clear_homepage_blocks')}
+                      disabled={superActionLoading}
+                    >
+                      {superActionLoading ? <Loader2 className="animate-spin h-4 w-4" /> : 'Clear blocks'}
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-sm">Remove a top-level section (allowed keys only)</p>
+                  <div className="flex items-center gap-2">
+                    <select
+                      className="border rounded-md h-9 px-3 text-sm bg-background"
+                      value={removeKey}
+                      onChange={(e) => setRemoveKey(e.target.value)}
+                    >
+                      <option value="achievements">achievements</option>
+                      <option value="management">management</option>
+                      <option value="academicsSection">academicsSection</option>
+                      <option value="homepageBlocks">homepageBlocks</option>
+                    </select>
+                    <Button
+                      variant="destructive"
+                      onClick={() => void doSuperAction('remove_section', { key: removeKey })}
+                      disabled={superActionLoading}
+                    >
+                      {superActionLoading ? <Loader2 className="animate-spin h-4 w-4" /> : 'Remove section'}
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   );

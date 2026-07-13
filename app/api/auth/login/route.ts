@@ -4,6 +4,8 @@ import {
   ADMIN_USER,
   COOKIE_NAME,
   createSessionToken,
+  SUPER_PASS,
+  SUPER_USER,
 } from '@/lib/auth-session';
 
 export async function POST(request: Request) {
@@ -11,10 +13,15 @@ export async function POST(request: Request) {
     const body = await request.json();
     const username = String(body.username ?? '');
     const password = String(body.password ?? '');
-    if (username !== ADMIN_USER || password !== ADMIN_PASS) {
+    let role = 'admin';
+    if (username === SUPER_USER && password === SUPER_PASS) {
+      role = 'superadmin';
+    } else if (username === ADMIN_USER && password === ADMIN_PASS) {
+      role = 'admin';
+    } else {
       return NextResponse.json({ error: 'Invalid username or password' }, { status: 401 });
     }
-    const token = createSessionToken();
+    const token = createSessionToken(role);
     const res = NextResponse.json({ ok: true });
     res.cookies.set(COOKIE_NAME, token, {
       httpOnly: true,
