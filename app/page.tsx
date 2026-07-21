@@ -10,6 +10,10 @@ import {
 import Link from 'next/link';
 import { readSiteContent } from '@/lib/content-store';
 import { FileText } from 'lucide-react';
+import VideoGallery from '@/components/VideoGallery';
+import { schoolVideos } from '@/lib/video-content';
+import GallerySection from '@/components/GallerySection';
+import { getHeroVideos } from '@/lib/hero-videos';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,8 +23,9 @@ export const metadata = {
     'Army Public School Khadakwasla provides quality education, character development, and holistic growth for students.',
 };
 
-export default async function Home() {
+export default async function HomePage() {
   const content = await readSiteContent();
+  const heroVideos = await getHeroVideos();
 
   const aboutCards = [
     {
@@ -95,6 +100,10 @@ export default async function Home() {
     .filter((d) => d.fileUrl && d.fileUrl !== '#' && d.title)
     .slice(-7);
 
+  const galleryVideos = schoolVideos.filter(
+    (video) => video.section === 'gallery' && video.isPublished !== false
+  );
+
   return (
     <div className="min-h-screen bg-background">
       {content.announcementBanner?.trim() && (
@@ -102,7 +111,7 @@ export default async function Home() {
           {content.announcementBanner}
         </div>
       )}
-      <HeroCarousel slides={content.heroSlides} />
+      <HeroCarousel videos={heroVideos.length > 0 ? heroVideos : undefined} />
 
       <section className="py-12 px-4 bg-background">
         <div className="max-w-7xl mx-auto">
@@ -247,6 +256,8 @@ export default async function Home() {
       </section>
 
       <Footer />
+      <VideoGallery videos={galleryVideos} />
+      <GallerySection />
     </div>
   );
 }

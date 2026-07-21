@@ -1,5 +1,8 @@
 import PageLayout from '@/components/PageLayout';
 import { readSiteContent } from '@/lib/content-store';
+import GalleryCategory from '@/components/GalleryCategory';
+import Link from 'next/link';
+import { getVideoAssetsFromAssetsFolder } from '@/lib/video-assets';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +14,46 @@ export const metadata = {
 export default async function GalleryPage() {
   const content = await readSiteContent();
   const galleryImages = content.gallery;
+
+  const allVideos = await getVideoAssetsFromAssetsFolder();
+
+  const videoCounts = {
+    Events: allVideos.filter((v) => v.category === 'Events').length,
+    Sports: allVideos.filter((v) => v.category === 'Sports').length,
+    Academics: allVideos.filter((v) => v.category === 'Academics').length,
+    'Campus Life': allVideos.filter((v) => v.category === 'Campus Life').length,
+  };
+
+  const categories = [
+    {
+      title: 'School Events',
+      slug: 'events',
+      category: 'Events' as const,
+      backgroundImage:
+        'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&h=600&fit=crop',
+    },
+    {
+      title: 'Sports & Games',
+      slug: 'sports',
+      category: 'Sports' as const,
+      backgroundImage:
+        'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=600&fit=crop',
+    },
+    {
+      title: 'Academic Activities',
+      slug: 'academics',
+      category: 'Academics' as const,
+      backgroundImage:
+        'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&h=600&fit=crop',
+    },
+    {
+      title: 'School Infrastructure',
+      slug: 'campus-life',
+      category: 'Campus Life' as const,
+      backgroundImage:
+        'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&h=600&fit=crop',
+    },
+  ];
 
   return (
     <PageLayout
@@ -59,36 +102,28 @@ export default async function GalleryPage() {
       </section>
 
       <section className="mt-16">
-        <h2 className="text-3xl font-bold text-[#0a305f] mb-8">Videos</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { title: 'School Tour', duration: '5:20' },
-            { title: 'Annual Day Celebration', duration: '12:45' },
-            { title: 'Sports Day Highlights', duration: '8:30' },
-            { title: 'Academic Excellence', duration: '6:15' },
-          ].map((video, index) => (
-            <div
-              key={index}
-              className="rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer bg-muted"
-            >
-              <div className="relative aspect-video flex items-center justify-center bg-[#0a305f]/10">
-                <button
-                  type="button"
-                  className="bg-[#da251c] text-white p-4 rounded-full hover:bg-[#da251c]/90 transition"
-                  aria-label={`Play ${video.title}`}
-                >
-                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </button>
-                <span className="absolute bottom-4 right-4 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                  {video.duration}
-                </span>
+        <h2 className="text-3xl font-bold text-[#0a305f] mb-8">Categories</h2>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {categories.map((cat) => (
+            <Link key={cat.slug} href={`/gallery/${cat.slug}`}>
+              <div
+                className="relative h-64 rounded-xl overflow-hidden shadow-lg group cursor-pointer transition transform hover:scale-105"
+                style={{
+                  backgroundImage: `url(${cat.backgroundImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/70 group-hover:from-black/50 group-hover:via-black/60 group-hover:to-black/80 transition" />
+
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+                  <h3 className="text-3xl font-bold text-white mb-2">{cat.title}</h3>
+                  <p className="text-lg text-red-400 font-semibold">
+                    {videoCounts[cat.category]} {videoCounts[cat.category] === 1 ? 'Video' : 'Videos'}
+                  </p>
+                </div>
               </div>
-              <div className="p-4">
-                <h3 className="font-bold text-[#0a305f]">{video.title}</h3>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
