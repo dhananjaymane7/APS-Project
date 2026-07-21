@@ -10,9 +10,6 @@ import {
 import Link from 'next/link';
 import { readSiteContent } from '@/lib/content-store';
 import { FileText } from 'lucide-react';
-import VideoGallery from '@/components/VideoGallery';
-import { schoolVideos } from '@/lib/video-content';
-import GallerySection from '@/components/GallerySection';
 import { getHeroVideos } from '@/lib/hero-videos';
 
 export const dynamic = 'force-dynamic';
@@ -99,10 +96,6 @@ export default async function HomePage() {
   const publicDocs = content.documents
     .filter((d) => d.fileUrl && d.fileUrl !== '#' && d.title)
     .slice(-7);
-
-  const galleryVideos = schoolVideos.filter(
-    (video) => video.section === 'gallery' && video.isPublished !== false
-  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -256,8 +249,6 @@ export default async function HomePage() {
       </section>
 
       <Footer />
-      <VideoGallery videos={galleryVideos} />
-      <GallerySection />
     </div>
   );
 }
